@@ -1,0 +1,122 @@
+body {
+    background-image: url(/app/static/imagem.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 90vw;
+    height: 90vh; 
+    margin: 0; 
+    padding: 0;
+}
+.container {
+    width: 510px;
+    height: 550px;
+    background-color: rgb(235, 234, 234);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+ul {
+    list-style: none;
+}
+.Cadastro {
+    position: absolute;
+    top: 10%;
+    right: 34%;
+    margin-top: 20px;
+    font-style: normal;
+    font-size: 40px;
+}
+.Nome {
+    position: absolute;
+    top: 30%;
+    right: 16%;
+    width: 340px;
+    height: 40px;
+    margin-bottom: 50px; 
+    margin-top: 5px;
+}
+.mensagemNome {
+    position: absolute;
+    top: 26%;
+    right: 77%;
+    font-style: normal;
+    font-size: 14px;
+    color: #000; 
+    margin-bottom: 5px;
+}
+.Email {
+    position: absolute;
+    top: 43%;
+    right: 16%;
+    width: 340px;
+    height: 40px;
+    margin-bottom: 670px; 
+}
+.mensagemEmail {
+    position: absolute;
+    top: 38%;
+    right: 76%;
+    font-style: normal;
+    font-size: 14px;
+    color: #000; 
+    margin-bottom: 5px;
+}
+.Senha {
+    position: absolute;
+    top: 53%;
+    right: 16%;
+    width: 340px;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px; 
+}
+.mensagemSenha {
+    position: absolute;
+    top: 50%;
+    right: 77%;
+    font-style: normal;
+    font-size: 14px;
+    color: #000; 
+    margin-bottom: 5px;
+}
+.mensagemSenha2 {
+    position: absolute;
+    top: 69%;
+    right: 54%;
+    font-style: normal;
+    font-size: 14px;
+    color: #000; 
+    margin-bottom: 5px;
+}
+.Senha2 {
+    position: absolute;
+    top: 72%;
+    right: 16%;
+    width: 340px;
+    height: 40px;
+    margin-top: 10px;
+}
+.mensagemSenha1 {
+    position: absolute;
+    top: 61%;
+    right: 29%;
+    font-style: normal;
+    font-size: 14px;
+    color: #000; 
+    margin-bottom: 5px;
+}
+.SignUp, .Botao {
+    position: absolute;
+    top: 90%;
+    bottom: 80%;
+    right:27%;
+    width: 240px;
+    height: 35px;
+    background-color: black;
+    color: white;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+}

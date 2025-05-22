@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/app/static/style.css">
+    <title>Interface</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="Cadastro">Criar Conta</div>
+        <ul>
+            <form action="http://127.0.0.1:5000/Criar_Usuario" method="POST">
+                <ul>
+                    <p class="mensagemNome"><strong>Nome</strong></p>
+                    <li><input type="text" class="Nome" name="nome" required></li>
+
+                    <p class="mensagemEmail"><strong>E-mail</strong></p>
+                    <li><input type="text" class="Email" name="email" required></li>
+
+                    <p class="mensagemSenha"><strong>Senha</strong></p>
+                    <li><input type="password" class="Senha" name="senha" placeholder="Pelo menos 6 caracteres"
+                            minlength="6" required></li>
+                    <p class="mensagemSenha1"><strong>❗As senhas devem ter pelo menos 6 caracteres</strong></p>
+
+                    <p class="mensagemSenha2"><strong>Insira a senha novamente</strong></p>
+                    <li><input type="password" class="Senha2" name="senha2" minlength="6" required></li>
+                </ul>
+
+                <button class="Botao" type="submit">SIGN UP</button>
+            </form>
+    </div>
+</body>
+
+</html>
