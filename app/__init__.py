@@ -6,14 +6,14 @@ import pandas as pd
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Dados.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Data.db'
 db = SQLAlchemy(app)
 
-class Usuario(db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    nome = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
-    senha = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
 
 with app.app_context():
     db.create_all()
@@ -22,83 +22,80 @@ with app.app_context():
 def index():
     return render_template('index.html')
 
-@app.route('/Criar_Usuario', methods=['POST'])
-def Criar_Usuario():
-    nome = request.form['nome']
+@app.route('/Create_User', methods=['POST'])
+def Create_User():
+    name = request.form['name']
     email = request.form['email']
-    senha = request.form['senha']
-    senha2 = request.form['senha2']
+    password = request.form['password']
+    password2 = request.form['password2']
 
-    if senha != senha2:
-        return render_template('index.html', erro='As senhas não coincidem!', nome=nome, email=email)
+    if password != password2:
+        return render_template('index.html', error='Passwords do not match!', name=name, email=email)
 
-    usuario_existente = Usuario.query.filter_by(email=email).first()
-    if usuario_existente:
-        return render_template('index.html', erro='E-mail já cadastrado!', nome=nome, email=email)
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return render_template('index.html', error='Email already registered!', name=name, email=email)
 
-    novo_usuario = Usuario(nome=nome, email=email, senha=senha)
-    db.session.add(novo_usuario)
+    new_user = User(name=name, email=email, password=password)
+    db.session.add(new_user)
     db.session.commit()
 
-    usuarios = Usuario.query.all()
-    dados = [{
+    users = User.query.all()
+    data = [{
         'id': u.id,
-        'nome': u.nome,
+        'name': u.name,
         'email': u.email,
-        'senha': u.senha
-    } for u in usuarios]
-    df = pd.DataFrame(dados)
-    df.to_excel("usuarios.xlsx", index=False)
+        'password': u.password
+    } for u in users]
+    df = pd.DataFrame(data)
+    df.to_excel("users.xlsx", index=False)
 
     return redirect('/')
 
-@app.route('/Lista_Usuario', methods=['GET'])
-def Lista_Usuario():
-    usuarios = Usuario.query.all()
-    return jsonify([{'id': usuario.id, 'nome': usuario.nome, 'email': usuario.email} for usuario in usuarios]), 200
+@app.route('/User_List', methods=['GET'])
+def User_List():
+    users = User.query.all()
+    return jsonify([{'id': user.id, 'name': user.name, 'email': user.email} for user in users]), 200
 
-@app.route("/Usuario/<int:id>", methods=["GET"])
-def Especifico(id):
-    usuario = Usuario.query.get(id)
-    if usuario is None:
-        return jsonify({"message": "Usuário não encontrado"}), 404
+@app.route("/User/<int:id>", methods=["GET"])
+def Specific(id):
+    user = User.query.get(id)
+    if user is None:
+        return jsonify({"message": "User not found"}), 404
     return jsonify({
-        'id': usuario.id,
-        'nome': usuario.nome,
-        'email': usuario.email
+        'id': user.id,
+        'name': user.name,
+        'email': user.email
     }), 200
 
-@app.route('/Atualizar_Usuario/<int:id>', methods=['PUT'])
-def Atualizacao(id):
+@app.route('/Update_User/<int:id>', methods=['PUT'])
+def Update_User(id):
     data = request.get_json()
-    usuario = Usuario.query.get(id)
-    if usuario is None:
-        return jsonify({"message": "Usuário não encontrado"}), 404
-    usuario.nome = data.get('nome', usuario.nome)
-    usuario.email = data.get('email', usuario.email)
+    user = User.query.get(id)
+    if user is None:
+        return jsonify({"message": "User not found"}), 404
+    user.name = data.get('name', user.name)
+    user.email = data.get('email', user.email)
     db.session.commit()
     return jsonify({
-        'id': usuario.id,
-        'nome': usuario.nome,
-        'email': usuario.email
+        'id': user.id,
+        'name': user.name,
+        'email': user.email
     }), 200
 
-@app.route('/Deletar_Usuario/<int:id>', methods=['DELETE'])
-def Deletar_Usuario(id):
-    usuario = Usuario.query.get(id)
-    if usuario is None:
-        return jsonify({"message": "Usuário não encontrado"}), 404
-    db.session.delete(usuario)
+@app.route('/Delete_User/<int:id>', methods=['DELETE'])
+def Delete_User(id):
+    user = User.query.get(id)
+    if user is None:
+        return jsonify({"message": "User not found"}), 404
+    db.session.delete(user)
     db.session.commit()
-    return jsonify({"message": "Usuário removido com sucesso"}), 200
+    return jsonify({"message": "User successfully removed"}), 200
 
-@app.route('/Exportar_Usuarios', methods=['GET'])
-def Exportar_Usuarios():
-    usuarios = Usuario.query.all()
-    dados = [{'ID': u.id, 'Nome': u.nome, 'E-mail': u.email} for u in usuarios]
-    df = pd.DataFrame(dados)
-    df.to_excel('usuarios.xlsx', index=False)
-    return jsonify({"message": "Usuários exportados para usuarios.xlsx"}), 200
-
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/Export_Users', methods=['GET'])
+def Export_Users():
+    users = User.query.all()
+    data = [{'ID': u.id, 'Name': u.name, 'Email': u.email} for u in users]
+    df = pd.DataFrame(data)
+    df.to_excel('users.xlsx', index=False)
+    return jsonify({"m
